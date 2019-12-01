@@ -124,9 +124,7 @@ namespace DayOne
 
         public static int CalculateFuel(int input, ref int output)
         {
-            var fuel = (int)Math.Floor((decimal)(input / 3)) - 2;                      
-
-        //    Console.WriteLine($"{fuel} / {output}");
+            var fuel = (int)Math.Floor((decimal)(input / 3)) - 2; 
 
             if (fuel > 0)
             {
