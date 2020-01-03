@@ -95,7 +95,31 @@ namespace DaySix
             OutputOrbit(com);
             var orbits = objectList.Sum(o => o.Level);
 
-            Console.WriteLine(orbits);
+            Console.WriteLine($"Orbits: {orbits}");
+
+            var transfers = CalculateTransfers(objectList);
+
+            Console.WriteLine($"Transfers: {transfers}");
+        }
+
+        private int CalculateTransfers(List<Satellite> objectList)
+        {
+            var san = objectList.SingleOrDefault(o => o.Id == "SAN");
+            var you = objectList.SingleOrDefault(o => o.Id == "YOU");
+            var intersectLevel = GetParents(san).Intersect(GetParents(you)).Max(p => p.Level);
+
+            return (san.Level - intersectLevel) + (you.Level - intersectLevel) - 2;
+           
+        }
+
+        private IEnumerable<Satellite> GetParents(Satellite sat)
+        {
+            var current = sat;
+            while (current.Parent != null)
+            {
+                yield return current.Parent;
+                current = current.Parent;
+            }
         }
 
         private void SetLevels(Satellite sat, int level = 0)
